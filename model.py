@@ -78,7 +78,8 @@ elif selected_kecamatan == "Gambir":
 # Prediksi harga berdasarkan nilai slider
 predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
 
-st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price[0]}")
+predicted_price_formatted = "{:,}".format(predicted_price[0])
+st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
 
 # Format juga MAE dan MAPE
 st.write(f"Mean Absolute Percentage Error: {mape:.2f}%")
