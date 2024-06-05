@@ -22,8 +22,7 @@ st.title("Prediksi Harga Apartemen di Jakarta Pusat")
 image = Image.open("gambar_contoh.jpg")
 st.image(image, use_column_width=True)
 
-# Function to train model and predict with automatic caching
-@st.cache(show_spinner=False)
+# Function to train model and predict
 def train_model(data):
     models = {}
     for kecamatan, df in data.items():
