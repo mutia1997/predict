@@ -21,8 +21,8 @@ image = Image.open("gambar_contoh.jpg")
 st.image(image, use_column_width=True)
 
 # Tabs
-tabs = ["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"]
-selected_tab = st.radio("Pilih Kecamatan", tabs)
+kecamatan = ["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"]
+tabs = st.tabs(kecamatan)
 
 # Function to train model and predict
 def predict_price(data, test_size, random_state, method):
@@ -56,8 +56,8 @@ def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
 # Content for each tab
-if selected_tab == "Tanah Abang":
-    st.write(f"Kecamatan yang dipilih: {selected_tab}")
+with tabs[0]:  # Tanah Abang
+    st.write("Kecamatan yang dipilih: Tanah Abang")
     # Slider untuk memilih fitur
     jumlah_kamar_tidur = st.slider("Jumlah Kamar Tidur", min_value=1, max_value=3, value=1)
     jumlah_kamar_mandi = st.slider("Jumlah Kamar Mandi", min_value=1, max_value=3, value=1)
@@ -66,15 +66,14 @@ if selected_tab == "Tanah Abang":
     mae, mape, model = predict_price(tanah_abang_data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
     # Prediksi harga berdasarkan nilai slider
     predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-    if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
+    if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga_tanah_abang'):
         predicted_price_formatted = "{:,}".format(predicted_price[0])
         st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
     # Format juga MAE dan MAPE
     st.write(f"Mean Absolute Percentage Error: {mape:.2f}%")
 
-# Implementasi untuk tab-tab lainnya
-elif selected_tab == "Menteng":
-    st.write(f"Kecamatan yang dipilih: {selected_tab}")
+with tabs[1]:  # Menteng
+    st.write("Kecamatan yang dipilih: Menteng")
     # Slider untuk memilih fitur
     jumlah_kamar_tidur = st.slider("Jumlah Kamar Tidur", min_value=1, max_value=3, value=1)
     jumlah_kamar_mandi = st.slider("Jumlah Kamar Mandi", min_value=1, max_value=3, value=1)
@@ -83,7 +82,7 @@ elif selected_tab == "Menteng":
     mae, mape, model = predict_price(menteng_data, test_size=0.25, random_state=60, method='Grid Search with Cross-Validation')
     # Prediksi harga berdasarkan nilai slider
     predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-    if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
+    if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga_menteng'):
         predicted_price_formatted = "{:,}".format(predicted_price[0])
         st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
     # Format juga MAE dan MAPE
