@@ -22,7 +22,7 @@ st.image(image, use_column_width=True)
 
 # Function to train model and predict
 def predict_price(data, test_size, random_state, method):
-    X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]  # Replace with actual features
+    X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]
     X.columns = ['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']  # Add feature names
     y = data['harga']
     
