@@ -23,6 +23,7 @@ st.image(image, use_column_width=True)
 # Function to train model and predict
 def predict_price(data, test_size, random_state, method):
     X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]  # Replace with actual features
+    X.columns = ['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']  # Add feature names
     y = data['harga']
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
@@ -77,7 +78,6 @@ elif selected_kecamatan == "Gambir":
 
 # Prediksi harga berdasarkan nilai slider
 predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-
 
 if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
        predicted_price_formatted = "{:,}".format(predicted_price[0])
