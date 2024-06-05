@@ -81,7 +81,7 @@ predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_b
 
 if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
        predicted_price_formatted = "{:,}".format(predicted_price[0])
-       st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
+       st.write(f"Estimasi Harga Apartemen Anda: Rp{predicted_price_formatted}")
 
 # Format juga MAE dan MAPE
 st.write(f"Mean Absolute Percentage Error: {mape:.2f}%")
