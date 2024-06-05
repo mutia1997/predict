@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.hashing import _CodeHasher
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -20,14 +21,14 @@ st.title("Prediksi Harga Apartemen di Jakarta Pusat")
 image = Image.open("gambar_contoh.jpg")
 st.image(image, use_column_width=True)
 
-# Function to train model and predict
+# Function to train model and predict with automatic caching
+@st.cache(hash_funcs={_CodeHasher: lambda x: x.code})
 def predict_price(data, test_size, random_state, method):
-    X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]  # Replace with actual features
+    X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]
     y = data['harga']
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
-    # Train model
     if method == 'Linear Regression':
         model = LinearRegression()
     elif method == 'Random Forest':
@@ -38,10 +39,8 @@ def predict_price(data, test_size, random_state, method):
 
     model.fit(X_train, y_train)
 
-    # Predict
     y_pred = model.predict(X_test)
 
-    # Evaluation metrics
     mae = mean_absolute_error(y_test, y_pred)
     mape = mean_absolute_percentage_error(y_test, y_pred)
 
@@ -80,7 +79,7 @@ predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_b
 
 if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
        predicted_price_formatted = "{:,}".format(predicted_price[0])
-       st.write(f"Estimasi Harga Apartemen Anda: Rp l{predicted_price_formatted}")
+       st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
 
 # Format juga MAE dan MAPE
 st.write(f"Mean Absolute Percentage Error: {mape:.2f}%")
