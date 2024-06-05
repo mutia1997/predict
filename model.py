@@ -83,3 +83,7 @@ if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
 
 # Format juga MAE dan MAPE
 st.write(f"Mean Absolute Percentage Error: {mape:.2f}%")
+
+# Tampilkan parameter terbaik jika menggunakan Grid Search with Cross-Validation
+if 'best_params_' in dir(model):
+    st.write("Parameter terbaik:", model.best_params_)
