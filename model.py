@@ -1,4 +1,4 @@
-import streamlit as st
+huimport streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
@@ -78,9 +78,9 @@ elif selected_kecamatan == "Gambir":
 # Prediksi harga berdasarkan nilai slider
 predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
 
-predicted_price_formatted = "{:,}".format(predicted_price[0])
 
 if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
+       predicted_price_formatted = "{:,}".format(predicted_price[0])
        st.write(f"Estimasi Harga Apartemen Anda: Rp {predicted_price_formatted}")
 
 # Format juga MAE dan MAPE
