@@ -54,10 +54,27 @@ def mean_absolute_percentage_error(y_true, y_pred):
 # Train model for all kecamatan
 models = {}
 for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"], [tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data]):
-    mae, mape, model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
+    if kecamatan == "Tanah Abang":
+        mae, mape, model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
+    elif kecamatan == "Menteng":
+        mae, mape, model = predict_price(data, test_size=0.25, random_state=60, method='Grid Search with Cross-Validation')
+    elif kecamatan == "Kemayoran":
+        mae, mape, model = predict_price(data, test_size=0.2, random_state=42, method='Random Forest')
+    elif kecamatan == "Cempaka Putih":
+        mae, mape, model = predict_price(data, test_size=0.1, random_state=42, method='Random Forest')
+    elif kecamatan == "Senen":
+        mae, mape, model = predict_price(data, test_size=0.15, random_state=60, method='Random Forest')
+    elif kecamatan == "Gambir":
+        mae, mape, model = predict_price(data, test_size=0.2, random_state=42, method='Grid Search with Cross-Validation')
+    
     models[kecamatan] = (mae, mape, model)
 
 # Prediksi harga dan MAPE untuk semua kecamatan
+st.title("Prediksi Harga Apartemen di Jakarta Pusat")
+image = Image.open("gambar_contoh.jpg")
+st.image(image, use_column_width=True)
+
+# Button to show estimated prices
 if st.button('Lihat Estimasi Harga Jual'):
     st.header("Estimasi Harga Apartemen dan MAPE untuk Semua Kecamatan")
     for kecamatan, (mae, mape, model) in models.items():
