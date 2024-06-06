@@ -43,7 +43,7 @@ def predict_price(data, test_size, random_state, method):
 
 # Train model for all kecamatan
 models = {}
-for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"], [tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data]):
+for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Senen", "Cempaka Putih", "Gambir"], [tanah_abang_data, menteng_data, kemayoran_data, senen_data, cempaka_putih_data, gambir_data]):
     if kecamatan == "Tanah Abang":
         model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
     elif kecamatan == "Menteng":
