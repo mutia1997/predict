@@ -8,14 +8,20 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 # Load data
-tanah_abang_data = pd.read_csv('tanah_abang.csv')
-menteng_data = pd.read_csv("menteng.csv")
-kemayoran_data = pd.read_csv("kemayoran.csv")
-cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
-senen_data = pd.read_csv("senen.csv")
-gambir_data = pd.read_csv("gambir.csv")
+@st.cache
+def load_data():
+    tanah_abang_data = pd.read_csv('tanah_abang.csv')
+    menteng_data = pd.read_csv("menteng.csv")
+    kemayoran_data = pd.read_csv("kemayoran.csv")
+    cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
+    senen_data = pd.read_csv("senen.csv")
+    gambir_data = pd.read_csv("gambir.csv")
+    return tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data
+
+tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data = load_data()
 
 # Function to train model and predict
+@st.cache
 def predict_price(data, test_size, random_state, method):
     X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]
     y = data['harga']
@@ -35,9 +41,13 @@ def predict_price(data, test_size, random_state, method):
 
     return model
 
+# Function to calculate Mean Absolute Percentage Error (MAPE)
+def mean_absolute_percentage_error(y_true, y_pred):
+    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
 # Train model for all kecamatan
 models = {}
-for kecamatan, data in zip(["Menteng", "Tanah Abang", "Kemayoran", "Senen", "Cempaka Putih", "Gambir"], [menteng_data, tanah_abang_data,kemayoran_data, senen_data, cempaka_putih_data, gambir_data]):
+for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"], [tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data]):
     if kecamatan == "Tanah Abang":
         model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
     elif kecamatan == "Menteng":
