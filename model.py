@@ -96,10 +96,10 @@ if st.button("Lihat Estimasi Harga Jual"):
     for kecamatan, result in results.items():
         # Predict the price using the selected options
         predicted_price = result["Model"].predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
+        st.write("")
         st.write(kecamatan)
         st.write(f"Harga : Rp{predicted_price[0]:,.0f}")
         st.write(f"MAPE : {result['MAPE']:.2f}%")
-        st.write("\n")
-        
+        st.write("")        
         # Add separator line
         st.markdown("___")
