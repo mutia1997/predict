@@ -15,11 +15,6 @@ cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
 senen_data = pd.read_csv("senen.csv")
 gambir_data = pd.read_csv("gambir.csv")
 
-# Main content
-st.title("Prediksi Harga Apartemen di Jakarta Pusat")
-image = Image.open("gambar_contoh.jpg")
-st.image(image, use_column_width=True)
-
 # Function to train model and predict
 def predict_price(data, test_size, random_state, method):
     X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]
@@ -69,11 +64,23 @@ for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Puti
     
     models[kecamatan] = (mae, mape, model)
 
+# Prediksi harga dan MAPE untuk semua kecamatan
+st.title("Prediksi Harga Apartemen di Jakarta Pusat")
+image = Image.open("gambar_contoh.jpg")
+st.image(image, use_column_width=True)
+
+# Radio buttons for selecting number of bedrooms and bathrooms
+jumlah_kamar_tidur = st.radio("Jumlah Kamar Tidur", [1, 2, 3], index=0)
+jumlah_kamar_mandi = st.radio("Jumlah Kamar Mandi", [1, 2, 3], index=0)
+
+# Number input for area of the building
+luas_bangunan = st.number_input("Luas Bangunan (m²)", min_value=20, max_value=200, value=40)
+
 # Button to show estimated prices
 if st.button('Lihat Estimasi Harga Jual'):
     st.header("Estimasi Harga Apartemen dan MAPE untuk Semua Kecamatan")
     for kecamatan, (mae, mape, model) in models.items():
-        predicted_price = model.predict([[1, 1, 40]])  # Example input, you can replace this with user input
+        predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
         predicted_price_formatted = "{:,}".format(predicted_price[0])
         st.write(f"Kecamatan: {kecamatan}")
         st.write(f"Estimasi Harga Apartemen: Rp {predicted_price_formatted}")
