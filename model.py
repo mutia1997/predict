@@ -84,5 +84,6 @@ if st.button('Lihat Estimasi Harga Jual'):
     st.header("Estimasi Harga Apartemen dan MAPE untuk Semua Kecamatan")
     for kecamatan, model in models.items():
         predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-        st.write(f"Kecamatan: {kecamatan}")
-        st.write(f"Estimasi Harga Apartemen: Rp {predicted_price[0]:,.0f}")
+       st.write(f"Kecamatan: {kecamatan}")
+       st.write(f"Rp{predicted_price[0]:,.0f}")
+       st.write("___")
