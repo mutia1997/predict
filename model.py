@@ -41,10 +41,6 @@ def predict_price(data, test_size, random_state, method):
 
     return model
 
-# Function to calculate Mean Absolute Percentage Error (MAPE)
-def mean_absolute_percentage_error(y_true, y_pred):
-    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-
 # Train model for all kecamatan
 models = {}
 for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Putih", "Senen", "Gambir"], [tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data]):
@@ -84,6 +80,9 @@ if st.button('Lihat Estimasi Harga Jual'):
     st.header("Estimasi Harga Apartemen dan MAPE untuk Semua Kecamatan")
     for kecamatan, model in models.items():
         predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-       st.write(f"Kecamatan: {kecamatan}")
-       st.write(f"Rp{predicted_price[0]:,.0f}")
-       st.write("___")
+        actual_price = data['harga'].values[0]
+        mape = mean_absolute_percentage_error(actual_price, predicted_price)
+        st.write(f"Kecamatan: {kecamatan}")
+        st.write(f"Estimasi Harga: Rp{predicted_price[0]:,.0f}")
+        st.write(f"MAPE: {mape:.2f}%")
+        st.markdown("---")
