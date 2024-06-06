@@ -57,6 +57,10 @@ jumlah_kamar_tidur = st.multiselect("Pilih Jumlah Kamar Tidur", [1, 2, 3], defau
 # Multiselect untuk memilih jumlah kamar mandi
 jumlah_kamar_mandi = st.multiselect("Pilih Jumlah Kamar Mandi", [1, 2, 3], default=[1])
 
+# Ubah multiselect menjadi satu nilai saja dengan menggunakan fungsi sum
+jumlah_kamar_tidur = sum(jumlah_kamar_tidur)
+jumlah_kamar_mandi = sum(jumlah_kamar_mandi)
+
 # Number input untuk luas bangunan
 luas_bangunan = st.number_input("Luas Bangunan (m²)", min_value=20, max_value=200, value=40)
 
