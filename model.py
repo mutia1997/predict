@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 # Load data
-@st.cache
 def load_data():
     menteng_data = pd.read_csv('menteng.csv')
     tanah_abang_data = pd.read_csv("tanah_abang.csv")
@@ -21,7 +20,6 @@ def load_data():
 menteng_data, tanah_abang_data, kemayoran_data, senen_data, cempaka_putih_data, gambir_data = load_data()
 
 # Function to train model and predict
-@st.cache
 def predict_price(data, test_size, random_state, method):
     X = data[['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']]
     y = data['harga']
