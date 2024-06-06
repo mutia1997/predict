@@ -51,15 +51,11 @@ def predict_price(data, test_size, random_state, method):
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-# Multiselect untuk memilih jumlah kamar tidur
-jumlah_kamar_tidur = st.multiselect("Pilih Jumlah Kamar Tidur", [1, 2, 3], default=[1])
+# Radio Buttons untuk memilih jumlah kamar tidur
+jumlah_kamar_tidur = st.radio("Pilih Jumlah Kamar Tidur", [1, 2, 3])
 
-# Multiselect untuk memilih jumlah kamar mandi
-jumlah_kamar_mandi = st.multiselect("Pilih Jumlah Kamar Mandi", [1, 2, 3], default=[1])
-
-# Ubah multiselect menjadi satu nilai saja dengan menggunakan fungsi sum
-jumlah_kamar_tidur = sum(jumlah_kamar_tidur)
-jumlah_kamar_mandi = sum(jumlah_kamar_mandi)
+# Radio Buttons untuk memilih jumlah kamar mandi
+jumlah_kamar_mandi = st.radio("Pilih Jumlah Kamar Mandi", [1, 2, 3])
 
 # Number input untuk luas bangunan
 luas_bangunan = st.number_input("Luas Bangunan (m²)", min_value=20, max_value=200, value=40)
