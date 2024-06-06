@@ -93,8 +93,8 @@ luas_bangunan = st.number_input("Luas Bangunan:", min_value=20.0, max_value=200.
 
 # Button to see estimated selling price
 if st.button("Lihat Estimasi Harga Jual"):
-    # Predict the price using the selected options
     for kecamatan, result in results.items():
+        # Predict the price using the selected options
         predicted_price = result["Model"].predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
         st.write(f"Prediksi Harga Apartemen di {kecamatan}: Rp{predicted_price[0]:,.0f}")
         st.write(f"Mean Absolute Percentage Error (MAPE) di {kecamatan}: {result['MAPE']:.2f}%")
