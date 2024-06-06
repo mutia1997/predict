@@ -51,39 +51,48 @@ def predict_price(data, test_size, random_state, method):
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-# Slider untuk memilih fitur
-jumlah_kamar_tidur = st.slider("Jumlah Kamar Tidur", min_value=1, max_value=3, value=1)
-jumlah_kamar_mandi = st.slider("Jumlah Kamar Mandi", min_value=1, max_value=3, value=1)
-luas_bangunan = st.slider("Luas Bangunan", min_value=20, max_value=200, value=40)
+# Multiselect untuk memilih jumlah kamar tidur
+jumlah_kamar_tidur = st.multiselect("Pilih Jumlah Kamar Tidur", [1, 2, 3], default=[1])
 
-# Train model and predict for each district
-mae_results = {}
-mape_results = {}
-predicted_prices = {}
+# Multiselect untuk memilih jumlah kamar mandi
+jumlah_kamar_mandi = st.multiselect("Pilih Jumlah Kamar Mandi", [1, 2, 3], default=[1])
 
-districts_data = {
-    "Tanah Abang": tanah_abang_data,
-    "Menteng": menteng_data,
-    "Kemayoran": kemayoran_data,
-    "Cempaka Putih": cempaka_putih_data,
-    "Senen": senen_data,
-    "Gambir": gambir_data
-}
+# Number input untuk luas bangunan
+luas_bangunan = st.number_input("Luas Bangunan (m²)", min_value=20, max_value=200, value=40)
 
-for district, data in districts_data.items():
-    mae, mape, model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
-    predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
-    mae_results[district] = mae
-    mape_results[district] = mape
-    predicted_prices[district] = predicted_price[0]
+if luas_bangunan < 20:
+    st.warning("Minimal input luas bangunan adalah 20 m²")
+elif luas_bangunan > 200:
+    st.warning("Maksimal input luas bangunan adalah 200 m²")
+else:
+    # Train model and predict for each district
+    mae_results = {}
+    mape_results = {}
+    predicted_prices = {}
 
-if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
-    st.write("Estimasi Harga Apartemen untuk Setiap Kecamatan:")
-    for district, price in predicted_prices.items():
-        predicted_price_formatted = "{:,}".format(price)
-        st.write(f"- {district}: Rp {predicted_price_formatted}")
+    districts_data = {
+        "Tanah Abang": tanah_abang_data,
+        "Menteng": menteng_data,
+        "Kemayoran": kemayoran_data,
+        "Cempaka Putih": cempaka_putih_data,
+        "Senen": senen_data,
+        "Gambir": gambir_data
+    }
 
-# Menampilkan MAE dan MAPE untuk setiap kecamatan
-st.write("Mean Absolute Percentage Error untuk Setiap Kecamatan:")
-for district, mape in mape_results.items():
-    st.write(f"- {district}: {mape:.2f}%")
+    for district, data in districts_data.items():
+        mae, mape, model = predict_price(data, test_size=0.05, random_state=42, method='Grid Search with Cross-Validation')
+        predicted_price = model.predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
+        mae_results[district] = mae
+        mape_results[district] = mape
+        predicted_prices[district] = predicted_price[0]
+
+    if st.button('Lihat Estimasi Harga Jual', key='prediksi_harga'):
+        st.write("Estimasi Harga Apartemen untuk Setiap Kecamatan:")
+        for district, price in predicted_prices.items():
+            predicted_price_formatted = "{:,}".format(price)
+            st.write(f"- {district}: Rp {predicted_price_formatted}")
+
+    # Menampilkan MAE dan MAPE untuk setiap kecamatan
+    st.write("Mean Absolute Percentage Error untuk Setiap Kecamatan:")
+    for district, mape in mape_results.items():
+        st.write(f"- {district}: {mape:.2f}%")
