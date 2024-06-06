@@ -10,15 +10,15 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 # Load data
 @st.cache
 def load_data():
-    tanah_abang_data = pd.read_csv('tanah_abang.csv')
-    menteng_data = pd.read_csv("menteng.csv")
+    menteng_data = pd.read_csv('menteng.csv')
+    tanah_abang_data = pd.read_csv("tanah_abang.csv")
     kemayoran_data = pd.read_csv("kemayoran.csv")
-    cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
     senen_data = pd.read_csv("senen.csv")
+    cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
     gambir_data = pd.read_csv("gambir.csv")
-    return tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data
+    return menteng_data, tanah_abang_data, kemayoran_data, senen_data, cempaka_putih_data, gambir_data
 
-tanah_abang_data, menteng_data, kemayoran_data, cempaka_putih_data, senen_data, gambir_data = load_data()
+menteng_data, tanah_abang_data, kemayoran_data, senen_data, cempaka_putih_data, gambir_data = load_data()
 
 # Function to train model and predict
 @st.cache
