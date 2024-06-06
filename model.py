@@ -24,6 +24,7 @@ st.image(image, use_column_width=True)
 def predict_price(data, test_size, random_state, method):
     feature_cols = ['jumlah_kamar_tidur', 'jumlah_kamar_mandi', 'luas_bangunan']
     X = data[feature_cols]
+    X.columns = feature_cols  # Menambahkan nama fitur
     y = data['harga']
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
