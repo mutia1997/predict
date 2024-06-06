@@ -98,4 +98,6 @@ if st.button("Lihat Estimasi Harga Jual"):
         predicted_price = result["Model"].predict([[jumlah_kamar_tidur, jumlah_kamar_mandi, luas_bangunan]])
         st.write(f"Prediksi Harga Apartemen di {kecamatan}: Rp{predicted_price[0]:,.0f}")
         st.write(f"Mean Absolute Percentage Error (MAPE) di {kecamatan}: {result['MAPE']:.2f}%")
+        
+        # Add separator line
         st.markdown("<hr>", unsafe_allow_html=True)
