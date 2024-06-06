@@ -69,11 +69,6 @@ for kecamatan, data in zip(["Tanah Abang", "Menteng", "Kemayoran", "Cempaka Puti
     
     models[kecamatan] = (mae, mape, model)
 
-# Prediksi harga dan MAPE untuk semua kecamatan
-st.title("Prediksi Harga Apartemen di Jakarta Pusat")
-image = Image.open("gambar_contoh.jpg")
-st.image(image, use_column_width=True)
-
 # Button to show estimated prices
 if st.button('Lihat Estimasi Harga Jual'):
     st.header("Estimasi Harga Apartemen dan MAPE untuk Semua Kecamatan")
