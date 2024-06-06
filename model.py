@@ -100,4 +100,4 @@ if st.button("Lihat Estimasi Harga Jual"):
         st.write(f"Mean Absolute Percentage Error (MAPE) di {kecamatan}: {result['MAPE']:.2f}%")
         
         # Add separator line
-        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("__")
