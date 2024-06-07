@@ -8,11 +8,11 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 # Load data
-tanah_abang_data = pd.read_csv('tanah_abang.csv')
+senen_data = pd.read_csv('senen.csv')
+tanah_abang_data = pd.read_csv("tanah_abang.csv")
 menteng_data = pd.read_csv("menteng.csv")
 kemayoran_data = pd.read_csv("kemayoran.csv")
 cempaka_putih_data = pd.read_csv("cempaka_putih.csv")
-senen_data = pd.read_csv("senen.csv")
 gambir_data = pd.read_csv("gambir.csv")
 
 # Function to calculate Mean Absolute Percentage Error (MAPE)
@@ -55,8 +55,12 @@ except FileNotFoundError:
 results = {}
 
 # Train model and predict for each district
-for kecamatan, data in {"Tanah Abang": tanah_abang_data, "Menteng": menteng_data, "Kemayoran": kemayoran_data, "Cempaka Putih": cempaka_putih_data, "Senen": senen_data, "Gambir": gambir_data}.items():
-    if kecamatan == "Tanah Abang":
+for kecamatan, data in {"Senen": senen_data, "Tanah Abang": tanah_abang_data, "Menteng": menteng_data, "Kemayoran": kemayoran_data, "Cempaka Putih": cempaka_putih_data, "Gambir": gambir_data}.items():
+    if kecamatan == "Senen":
+        test_size = 0.15
+        random_state = 60
+        method = 'Random Forest'
+    elif kecamatan == "Tanah Abang":
         test_size = 0.05
         random_state = 42
         method = 'Grid Search with Cross-Validation'
@@ -71,10 +75,6 @@ for kecamatan, data in {"Tanah Abang": tanah_abang_data, "Menteng": menteng_data
     elif kecamatan == "Cempaka Putih":
         test_size = 0.1
         random_state = 42
-        method = 'Random Forest'
-    elif kecamatan == "Senen":
-        test_size = 0.15
-        random_state = 60
         method = 'Random Forest'
     elif kecamatan == "Gambir":
         test_size = 0.2
