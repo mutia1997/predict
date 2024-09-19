@@ -44,7 +44,6 @@ def predict_price(data, test_size, random_state, method):
     return mae, mape, model
 
 # Main content
-st.title("Prediksi Harga Apartemen di Jakarta Pusat")
 try:
     image = Image.open("gambar_contoh.jpg")
     st.image(image, use_column_width=True)
