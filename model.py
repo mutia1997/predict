@@ -88,7 +88,7 @@ jumlah_kamar_tidur = st.radio("Jumlah Kamar Tidur:", [1, 2, 3])
 jumlah_kamar_mandi = st.radio("Jumlah Kamar Mandi:", [1, 2, 3])
 
 # Input field for building area
-luas_bangunan = st.number_input("Luas Bangunan:", min_value=20.0, max_value=200.0, value=100.0)
+luas_bangunan = st.number_input("Luas Bangunan (m²):", min_value=20.0, max_value=200.0, value=100.0)
 
 # Button to see estimated selling price
 if st.button("Lihat Estimasi Harga Jual"):
